@@ -1,0 +1,38 @@
+[project]
+name = "funnycoin-rust"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10, <4"
+
+
+[dependency-groups]
+
+dev = [
+    "pytest>=8.4.1",
+    "pytest-ordering",
+    "pytest-random-order",
+    "pytest-timeout",
+    "pytest-xdist",
+    "Pillow>=11",
+    "protobuf==6.33.5",           # minor needs to be >= than version in shell.nix
+    "trezor",
+    "pylint~=2.11",
+    "isort>=5,<6",
+    "flake8>=7",
+    "autoflake",
+    "flake8-requirements>=2.1.0",
+    "black>=24.2",
+    "dominate",
+    "requests>=2.32.5",
+    "mako>=1.0.7,<2",
+    "click>=8,<9",
+]
+
+[tool.uv.sources]
+trezor = { path = "../../trezor-firmware/python", editable = true }
+
+[tool.isort]
+profile = "black"
+known_first_party = ["trezorlib", "ui_tests"]
+known_third_party = ["trezor"]
