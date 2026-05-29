@@ -1,0 +1,9 @@
+[workspace]
+members = ["xtask"]
+
+resolver = "2"
+
+
+[profile.test]
+split-debuginfo = "off"
+debug = 2
