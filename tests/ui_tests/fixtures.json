@@ -1,0 +1,16 @@
+{
+"T3W1": {
+"T3W1_en-test_app_spawn.py::test_spawn": "778dbcfb96e575c652b06902ef2842f6cc261dd3d457cc66b8b6c9338e82e1fb",
+"T3W1_en-test_getpublickey.py::test_cancel_getpublickey": "f92107faeed619b37315ce2d89da8e6bcbc6e718069de8f4ad60623ca8964ec6",
+"T3W1_en-test_getpublickey.py::test_getpublickey[Ledger Live legacy path-show_display]": "7f401c4cdd23fff86af9ff9edc8c83fd09e12f6c8f1b2e34fd65d6881c3b4c47",
+"T3W1_en-test_getpublickey.py::test_getpublickey[Ledger Live legacy path-silent]": "90812f196e8c35dc7f35cb5a9a0e553c8fc6a610812d85b9f166e90b3f1c8b59",
+"T3W1_en-test_getpublickey.py::test_getpublickey[Ledger Live legacy path]": "778dbcfb96e575c652b06902ef2842f6cc261dd3d457cc66b8b6c9338e82e1fb",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters0-result0-show_display]": "ab56791d95d3719a9c5cd12981812a719b2984042ecaf6a6df85c6b16ed0fc9c",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters0-result0-silent]": "90812f196e8c35dc7f35cb5a9a0e553c8fc6a610812d85b9f166e90b3f1c8b59",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters1-result1-show_display]": "9d4b1416e848dc2b2358223f09b13e9cd94f1dbfc340c6716b3041fbaf0d2b67",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters1-result1-silent]": "90812f196e8c35dc7f35cb5a9a0e553c8fc6a610812d85b9f166e90b3f1c8b59",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters2-result2-show_display]": "530949fc8ef973eb0b87baaf1c341a703c25bec37503dbee0740ce281d423eb6",
+"T3W1_en-test_getpublickey.py::test_getpublickey[parameters2-result2-silent]": "90812f196e8c35dc7f35cb5a9a0e553c8fc6a610812d85b9f166e90b3f1c8b59",
+"T3W1_en-test_getpublickey.py::test_slip25_disallowed": "90812f196e8c35dc7f35cb5a9a0e553c8fc6a610812d85b9f166e90b3f1c8b59"
+}
+}

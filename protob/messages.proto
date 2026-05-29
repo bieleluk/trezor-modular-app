@@ -1,0 +1,17 @@
+syntax = "proto2";
+package hw.trezor.messages;
+
+// import "options.proto";
+
+/**
+ * Messages for Trezor communication
+ */
+
+/**
+ * Mapping between Trezor wire identifier (uint) and a protobuf message
+ */
+enum MessageType {
+  MessageType_GetPublicKey = 0 ;
+  MessageType_PublicKey    = 1 ;
+
+}

@@ -1,0 +1,18 @@
+{
+    "include": [
+        "tests",
+    ],
+    "exclude": [
+        "**/node_modules",
+        "**/__pycache__",
+        ".venv/",
+        ".*",
+        "tests/ui_tests/*",
+        "tests/show_results.py",
+        "tests/update_fixtures.py",
+    ],
+    "typeCheckingMode": "basic",
+    "pythonVersion": "3.10",
+    "reportMissingModuleSource": false,
+    "reportMissingImports": false
+}
