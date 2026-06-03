@@ -1,5 +1,5 @@
 [project]
-name = "funnycoin-rust"
+name = "funnycoin"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -30,7 +30,7 @@ dev = [
 ]
 
 [tool.uv.sources]
-trezor = { path = "../../trezor-firmware/python", editable = true }
+trezor = { path = "../trezor-firmware/python", editable = true }
 
 [tool.isort]
 profile = "black"

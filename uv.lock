@@ -452,7 +452,7 @@ wheels = [
 ]
 
 [[package]]
-name = "funnycoin-rust"
+name = "funnycoin"
 version = "0.1.0"
 source = { virtual = "." }
 
@@ -499,7 +499,7 @@ dev = [
     { name = "pytest-timeout" },
     { name = "pytest-xdist" },
     { name = "requests", specifier = ">=2.32.5" },
-    { name = "trezor", editable = "../../trezor-firmware/python" },
+    { name = "trezor", editable = "../trezor-firmware/python" },
 ]
 
 [[package]]
@@ -1239,7 +1239,7 @@ wheels = [
 [[package]]
 name = "trezor"
 version = "0.20.2"
-source = { editable = "../../trezor-firmware/python" }
+source = { editable = "../trezor-firmware/python" }
 dependencies = [
     { name = "click" },
     { name = "construct" },

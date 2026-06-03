@@ -1,2 +1,2 @@
 [alias]
-xtask = "run -p xtask --"
+xtask = "run --manifest-path /home/lbielesch/github/trezor-firmware/sdk/crates/modular-xtask/Cargo.toml --"
