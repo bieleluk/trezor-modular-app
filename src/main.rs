@@ -28,8 +28,11 @@ mod strutil;
 use proto::{funnycoin::GetPublicKey, messages::MessageType};
 
 #[cfg(not(test))]
+use embedded_alloc::LlffHeap as Heap;
+
+#[cfg(not(test))]
 #[global_allocator]
-static ALLOCATOR: emballoc::Allocator<4096> = emballoc::Allocator::new();
+static HEAP: Heap = Heap::empty();
 
 /// Macro to generate handler functions
 macro_rules! wire_handler {
@@ -86,6 +89,15 @@ wire_handler!(
 // Application entry point - receives raw bytes, returns raw bytes
 #[unsafe(no_mangle)]
 pub fn app() -> Result<()> {
+    // Initialize the allocator BEFORE you use it
+    #[cfg(not(test))]
+    {
+        use core::mem::MaybeUninit;
+        const HEAP_SIZE: usize = 4096;
+        static mut HEAP_MEM: [MaybeUninit<u8>; HEAP_SIZE] = [MaybeUninit::uninit(); HEAP_SIZE];
+        unsafe { HEAP.init(&raw mut HEAP_MEM as usize, HEAP_SIZE) }
+    }
+
     loop {
         let message = CORE_SERVICE
             .receive(Timeout::max())

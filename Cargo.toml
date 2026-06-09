@@ -32,9 +32,9 @@ debug = 2
 trezor-app-sdk = { path = "../trezor-firmware/sdk/crates/trezor-app-sdk", features = [
     "alloc",
 ] }
-emballoc = "0.3.0"
 prost = { version = "0.14.1", default-features = false, features = ["derive"] }
 ufmt = { version = "0.2.0", default-features = false }
+embedded-alloc = "0.7.0"
 
 [build-dependencies]
 prost-build = "0.14.1"
@@ -66,7 +66,7 @@ log_level_trace = ['trezor-app-sdk/log_level_trace']
 # --------------------------------------------------------------------------
 # Selectable features
 # --------------------------------------------------------------------------
-emulator = ["debug"]
+emulator = []
 test = ["dev_keys", 'trezor-app-sdk/test', 'trezor-app-sdk/log_level_trace']
 debug = ['trezor-app-sdk/debug']
 
