@@ -29,7 +29,9 @@ split-debuginfo = "off"
 debug = 2
 
 [dependencies]
-trezor-app-sdk = { path = "../trezor-firmware/sdk/crates/trezor-app-sdk" }
+trezor-app-sdk = { path = "../trezor-firmware/sdk/crates/trezor-app-sdk", features = [
+    "alloc",
+] }
 emballoc = "0.3.0"
 prost = { version = "0.14.1", default-features = false, features = ["derive"] }
 ufmt = { version = "0.2.0", default-features = false }
