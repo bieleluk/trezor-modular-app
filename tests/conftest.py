@@ -378,7 +378,7 @@ def _generate_python_protobuf(root: Path) -> None:
 
 
 def pytest_sessionstart(session: pytest.Session) -> None:
-    root = Path(__file__).resolve().parent.parent  # sdk/apps/ethereum
+    root = Path(__file__).resolve().parent.parent
     _generate_python_protobuf(root)
 
     if session.config.getoption("ui"):

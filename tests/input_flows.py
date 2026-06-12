@@ -33,8 +33,6 @@ class InputFlowBase:
         self.layout_type = client.layout_type
 
     def get(self) -> Callable[[], BRGeneratorType]:
-        self.client.watch_layout(True)
-
         # There is currently just one input flow for all models
         assert hasattr(self, "input_flow")
         return getattr(self, "input_flow")

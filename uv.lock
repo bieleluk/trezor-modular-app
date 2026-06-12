@@ -1264,7 +1264,7 @@ requires-dist = [
     { name = "click", specifier = ">=8,<9" },
     { name = "construct", specifier = ">=2.9,!=2.10.55" },
     { name = "construct-classes", specifier = ">=0.1.2" },
-    { name = "cryptography", specifier = ">=41" },
+    { name = "cryptography", specifier = ">=47" },
     { name = "dominate", marker = "extra == 'test'" },
     { name = "ecdsa", marker = "extra == 'test'", specifier = ">=0.16,<0.17" },
     { name = "hidapi", marker = "extra == 'full'", specifier = ">=0.7.99.post20" },

@@ -27,7 +27,7 @@ from .input_flows import InputFlowGetPublicKeyCancel
 
 @pytest.mark.parametrize("show_display", [False, True], ids=["silent", "show_display"])
 @parametrize_using_common_fixtures("getpublickey.json")
-def test_ethereum_getpublickey(
+def test_getpublickey(
     session: Session, instance_id: int, parameters, result, show_display: bool
 ):
     path = parse_path(parameters["path"])
@@ -49,7 +49,6 @@ def test_slip25_disallowed(session: Session, instance_id: int):
 def test_cancel_getpublickey(session: Session, instance_id: int):
     flow = InputFlowGetPublicKeyCancel(session)
     with session.test_ctx as client, pytest.raises(Cancelled):
-        client.watch_layout()
         client.set_input_flow(flow.get())
         path = parse_path("m/44'/60'/0'/0/0")
         funnycoin.get_public_node(session, instance_id, path, True)
