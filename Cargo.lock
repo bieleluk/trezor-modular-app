@@ -744,15 +744,7 @@ dependencies = [
  "rkyv",
  "sha3",
  "spin",
- "trezor-structs",
  "ufmt",
-]
-
-[[package]]
-name = "trezor-structs"
-version = "0.1.0"
-dependencies = [
- "rkyv",
 ]
 
 [[package]]

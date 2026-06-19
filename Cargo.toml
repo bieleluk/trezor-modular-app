@@ -5,6 +5,9 @@ name = "funnycoin"
 version = "0.1.0"
 edition = "2024"
 
+[package.metadata.trezor]
+id = "ethereum.trezor.com"
+
 [profile.debug-fw]
 inherits = "dev"
 split-debuginfo = "off"
