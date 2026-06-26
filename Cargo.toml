@@ -6,7 +6,9 @@ version = "0.1.0"
 edition = "2024"
 
 [package.metadata.trezor]
-id = "ethereum.trezor.com"
+id = "funnycoin.trezor.com"
+name = "Fynnycoin"
+vendor = "SatoshiLabs"
 
 [profile.debug-fw]
 inherits = "dev"
