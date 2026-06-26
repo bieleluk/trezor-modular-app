@@ -42,6 +42,13 @@ mkShell {
     libjpeg
   ];
 
+  LD_LIBRARY_PATH = lib.makeLibraryPath [
+    libffi
+    libjpeg
+    libusb1
+    libressl
+  ];
+  DYLD_LIBRARY_PATH = "${libffi}/lib:${libjpeg.out}/lib:${libusb1}/lib:${libressl.out}/lib";
   LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
   RUST_SRC_PATH = "${rustSrc}/lib/rustlib/src/rust/library";
 }
