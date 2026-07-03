@@ -12,9 +12,15 @@ use trezor_app_sdk::{
 };
 
 #[cfg(not(test))]
-pub(crate) use alloc::string::{String, ToString};
+pub(crate) use alloc::{
+    string::{String, ToString},
+    vec::Vec,
+};
 #[cfg(test)]
-pub(crate) use std::string::{String, ToString};
+pub(crate) use std::{
+    string::{String, ToString},
+    vec::Vec,
+};
 
 // Include generated code
 pub(crate) mod proto;

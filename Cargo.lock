@@ -43,6 +43,9 @@ name = "bs58"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bf88ba1141d185c399bee5288d850d63b8369520c1eafc32a0430b5b6c287bf4"
+dependencies = [
+ "tinyvec",
+]
 
 [[package]]
 name = "bytecheck"
@@ -188,6 +191,7 @@ checksum = "d9c4f5dac5e15c24eb999c26181a6ca40b39fe946cbe4c263c7209467bc83af2"
 name = "funnycoin"
 version = "0.1.0"
 dependencies = [
+ "bs58",
  "embedded-alloc",
  "prost",
  "prost-build",
@@ -735,7 +739,6 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 name = "trezor-app-sdk"
 version = "0.1.0"
 dependencies = [
- "bs58",
  "critical-section",
  "cty",
  "hmac-sha256",
