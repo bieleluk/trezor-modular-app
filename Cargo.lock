@@ -192,7 +192,6 @@ name = "funnycoin"
 version = "0.1.0"
 dependencies = [
  "bs58",
- "embedded-alloc",
  "prost",
  "prost-build",
  "serde",
@@ -741,6 +740,7 @@ version = "0.1.0"
 dependencies = [
  "critical-section",
  "cty",
+ "embedded-alloc",
  "hmac-sha256",
  "hmac-sha512",
  "num_enum",

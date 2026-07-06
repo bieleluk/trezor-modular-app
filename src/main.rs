@@ -6,7 +6,7 @@ extern crate alloc;
 
 use prost::Message;
 use trezor_app_sdk::{
-    CORE_SERVICE, Error, IpcMessage, Result, ResultExt, error,
+    CORE_SERVICE, Error, IpcMessage, Result, ResultExt, debug, error,
     service::{self, CoreIpcService},
     util::Timeout,
 };
@@ -33,13 +33,6 @@ mod strutil;
 
 use proto::{funnycoin::GetPublicKey, messages::MessageType};
 
-#[cfg(not(test))]
-use embedded_alloc::LlffHeap as Heap;
-
-#[cfg(not(test))]
-#[global_allocator]
-static HEAP: Heap = Heap::empty();
-
 /// Macro to generate handler functions
 macro_rules! wire_handler {
     ($handler_name:ident, $request_type:ty, $response_msg:expr, $handler_fn:path) => {
@@ -47,7 +40,7 @@ macro_rules! wire_handler {
         fn $handler_name(request_data: &[u8]) -> Result<()> {
             let request = <$request_type>::decode(request_data)
                 .map_err(|_| Error::InvalidMessage)
-                .context("Failed to decode request")?;
+                .c()?;
 
             let response = $handler_fn(request);
 
@@ -58,13 +51,13 @@ macro_rules! wire_handler {
                         ($response_msg as i32)
                             .try_into()
                             .map_err(|_| Error::InvalidMessage)
-                            .context("Failed to convert response message type")?,
+                            .c()?,
                         &response_bytes,
                     );
                     message
                         .send(service::CORE_SERVICE_REMOTE, CoreIpcService::WireEnd.into())
                         .map_err(Into::into)
-                        .context("Failed to send response message")?;
+                        .c()?;
                 }
                 Err(e) => {
                     let message = IpcMessage::new(e.code(), e.message().as_bytes());
@@ -75,7 +68,7 @@ macro_rules! wire_handler {
                             CoreIpcService::WireError.into(),
                         )
                         .map_err(Into::into)
-                        .context("Failed to send error message")?;
+                        .c()?;
                 }
             }
 
@@ -95,24 +88,14 @@ wire_handler!(
 // Application entry point - receives raw bytes, returns raw bytes
 #[unsafe(no_mangle)]
 pub fn app() -> Result<()> {
-    // Initialize the allocator BEFORE you use it
-    #[cfg(not(test))]
-    {
-        use core::mem::MaybeUninit;
-        const HEAP_SIZE: usize = 4096;
-        static mut HEAP_MEM: [MaybeUninit<u8>; HEAP_SIZE] = [MaybeUninit::uninit(); HEAP_SIZE];
-        unsafe { HEAP.init(&raw mut HEAP_MEM as usize, HEAP_SIZE) }
-    }
-
     loop {
+        debug!("Waiting for next WireStart message from core service");
         let message = CORE_SERVICE
             .receive(Timeout::max())
             .map_err(Into::into)
-            .context("Timeout while receiving message")?;
+            .c()?;
         match message.service().into() {
-            CoreIpcService::WireStart => {
-                handle_wire_message(&message).context("Error while handling wire message")?
-            }
+            CoreIpcService::WireStart => handle_wire_message(&message).c()?,
             _ => {
                 error!(
                     "Invalid service invoked: {:?}, message id {:?}, data {:?}",

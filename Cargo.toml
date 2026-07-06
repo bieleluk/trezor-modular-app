@@ -11,6 +11,14 @@ name = "Funnycoin"
 vendor = "SatoshiLabs"
 stack-size = 16384
 heap-size = 4096
+app-ring = 0
+curves = ["secp256k1"]
+paths = [
+    # BIP-44 for basic (legacy) Bitcoin accounts, and widely used for other currencies:
+    # https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki
+    "m/44'/coin_type'/account'/change/address_index/**",
+]
+slip44-id = 123
 
 [profile.debug-fw]
 inherits = "dev"
@@ -36,12 +44,9 @@ split-debuginfo = "off"
 debug = 2
 
 [dependencies]
-trezor-app-sdk = { path = "../trezor-firmware/sdk/crates/trezor-app-sdk", features = [
-    "alloc",
-] }
+trezor-app-sdk = { path = "../trezor-firmware/sdk/crates/trezor-app-sdk" }
 prost = { version = "0.14.1", default-features = false, features = ["derive"] }
 ufmt = { version = "0.2.0", default-features = false }
-embedded-alloc = "0.7.0"
 bs58 = { version = "0.5", default-features = false, features = ["alloc"] }
 
 
@@ -70,13 +75,12 @@ log_level_error = ['trezor-app-sdk/log_level_error']
 log_level_warn = ['trezor-app-sdk/log_level_warn']
 log_level_info = ['trezor-app-sdk/log_level_info']
 log_level_debug = ['trezor-app-sdk/log_level_debug']
-log_level_trace = ['trezor-app-sdk/log_level_trace']
 
 # --------------------------------------------------------------------------
 # Selectable features
 # --------------------------------------------------------------------------
 emulator = []
-test = ["dev_keys", 'trezor-app-sdk/test', 'trezor-app-sdk/log_level_trace']
+test = ["dev_keys", 'trezor-app-sdk/test', 'trezor-app-sdk/log_level_debug']
 debug = ['trezor-app-sdk/debug']
 
 # --------------------------------------------------------------------------

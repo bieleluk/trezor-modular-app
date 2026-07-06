@@ -6,18 +6,18 @@ use crate::{
     },
     strutil::hex_encode,
 };
-use trezor_app_sdk::{Error, Result, crypto, ui, unwrap};
+use trezor_app_sdk::{Error, Result, ResultExt, crypto, ui, unwrap};
 
 const VERSION: u32 = 0x0488B21E;
 
 pub(crate) fn get_public_key(msg: GetPublicKey) -> Result<PublicKey> {
     let mut public_key = PublicKey::default();
 
-    let xpub = crypto::get_xpub(&msg.address_n)?;
+    let xpub = crypto::get_xpub(&msg.address_n, VERSION).c()?;
     public_key.xpub = xpub.as_str().to_string();
 
     let node_ll = HdNodeData::deserialize_public(xpub.as_str(), VERSION)
-        .map_err(|_| Error::DataError("Failed to deserialize public key"))?;
+        .map_err(|_| Error::DataError("Failed to deserialize public key")).c()?;
 
     let node = HdNodeType {
         depth: node_ll.depth.into(),
@@ -30,24 +30,29 @@ pub(crate) fn get_public_key(msg: GetPublicKey) -> Result<PublicKey> {
 
     if matches!(msg.show_display, Some(true)) {
         let xpub = hex_encode(&node.public_key);
-        ui::error_if_not_confirmed(ui::show_public_key(
-            xpub.as_str(),
-            tr!("address__public_key"),
-            None,
-            None,
-            None,
-            "show_pubkey",
-            ButtonRequestType::ButtonRequestOther.into(),
-        )?)?;
+        ui::error_if_not_confirmed(
+            ui::show_public_key(ui::ShowPublicKey::new(
+                xpub.as_str(),
+                tr!("address__public_key"),
+                None,
+                None,
+                None,
+                "show_pubkey",
+                ButtonRequestType::ButtonRequestOther.into(),
+            ))
+            .c()?,
+        )
+        .c()?;
 
-        ui::show_success(
+        ui::show_success(ui::ShowSuccess::new(
             tr!("words__title_done"),
             tr!("address__public_key_confirmed"),
             tr!("instructions__continue_in_app"),
             Some(3200),
             None,
             ButtonRequestType::ButtonRequestOther.into(),
-        )?;
+        ))
+        .c()?;
     }
 
     public_key.node = node;
@@ -97,7 +102,8 @@ impl HdNodeData {
 
         let decoded_len = bs58::decode(serialized)
             .onto(&mut node_data)
-            .map_err(|_| Error::DataError("Failed to decode xpub"))?;
+            .map_err(|_| Error::DataError("Failed to decode xpub"))
+            .c()?;
         if decoded_len != Self::TOTAL {
             return Err(Error::DataError("Invalid xpub length"));
         }
@@ -120,7 +126,7 @@ impl HdNodeData {
         let (chain_code_bytes, rest) = rest.split_at(Self::CHAIN_CODE_LEN);
         let chain_code: [u8; 32] = unwrap!(chain_code_bytes.try_into());
 
-        let (public_key_bytes, rest) = rest.split_at(Self::PUBLIC_KEY_LEN);
+        let (public_key_bytes, _checksum) = rest.split_at(Self::PUBLIC_KEY_LEN);
         let public_key: [u8; 33] = unwrap!(public_key_bytes.try_into());
 
         Ok(HdNodeData {
@@ -133,7 +139,7 @@ impl HdNodeData {
     }
 
     /// Double SHA-256: SHA256(SHA256(data)), returns first 4 bytes as checksum.
-    fn sha256d_checksum(data: &[u8]) -> [u8; 4] {
+    fn _sha256d_checksum(data: &[u8]) -> [u8; 4] {
         let mut hasher = crypto::Sha256::new(Some(data));
         let first = hasher.digest();
 
@@ -143,7 +149,7 @@ impl HdNodeData {
         [second[0], second[1], second[2], second[3]]
     }
 
-    pub fn serialize_public(&self, version: u32) -> Result<String> {
+    pub fn _serialize_public(&self, version: u32) -> Result<String> {
         let mut node_data = Vec::with_capacity(Self::TOTAL);
 
         node_data.extend(&version.to_be_bytes());
@@ -153,7 +159,7 @@ impl HdNodeData {
         node_data.extend(&self.chain_code);
         node_data.extend(&self.public_key);
 
-        let checksum = Self::sha256d_checksum(&node_data);
+        let checksum = Self::_sha256d_checksum(&node_data);
         node_data.extend(&checksum);
 
         if node_data.len() != Self::TOTAL {
