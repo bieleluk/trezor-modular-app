@@ -7,8 +7,10 @@ edition = "2024"
 
 [package.metadata.trezor]
 id = "funnycoin.trezor.com"
-name = "Fynnycoin"
+name = "Funnycoin"
 vendor = "SatoshiLabs"
+stack-size = 16384
+heap-size = 4096
 
 [profile.debug-fw]
 inherits = "dev"

@@ -9,6 +9,8 @@ PHDRS {
 
 SECTIONS
 {
+  . = 0xC0000000;
+  
   .text : {
     *(.text .text.*)
     *(.dynsym) *(.dynstr) *(.hash)
@@ -16,11 +18,11 @@ SECTIONS
 
   .rodata : {
     *(.rodata .rodata.*)
-    *(.data.rel.ro .data.rel.ro.*)
   } : rx
 
-  . = ALIGN(32);
-  .data : {
+  . = 0xD0000000;
+
+  .data : ALIGN(32) {
     *(.data .data.*)
     *(.sdata .sdata.*)
   } :rw
@@ -30,13 +32,8 @@ SECTIONS
     *(.sbss .sbss.*)
   } :rw
 
-  .stack (NOLOAD) : {
-    _stack_section_start = .;
-    . = . + 16K;
-    _stack_section_end = .;
-  } :rw
-
   .rel : {
+    *(.rel.text)
     *(.rel.rodata)
     *(.rel.data)
   } :rel

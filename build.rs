@@ -96,6 +96,7 @@ fn is_unit_test() -> bool {
 }
 
 fn link() {
+    println!("cargo:rerun-if-changed=memory.x");
     if !is_unit_test() {
         if is_macos() {
             // On macOS, link to System framework to get memcpy, memset, etc.
